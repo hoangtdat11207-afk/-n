@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Hồ sơ Bệnh án - Trung tâm Y tế Khẩn cấp Hoà Lạc</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>
+                <span>🏥</span>
+                TRUNG TÂM Y TẾ KHẨN CẤP HOÀ LẠC
+            </h1>
+            <div class="user-info">
+                <span class="user-name" id="userName"></span>
+                <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+            </div>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="dashboard-actions">
+                <button class="btn-primary" onclick="openNewRecordModal()">
+                    <span>➕</span>
+                    Tạo hồ sơ bệnh án mới
+                </button>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm hồ sơ bệnh án..." onkeyup="filterRecords()">
+                </div>
+            </div>
+            
+            <div id="recordsContainer" class="records-grid">
+                <!-- Các hồ sơ bệnh án sẽ được hiển thị ở đây -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal tạo/chỉnh sửa hồ sơ bệnh án -->
+    <div id="recordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Tạo hồ sơ bệnh án mới</h2>
+                <button class="btn-close" onclick="closeRecordModal()">&times;</button>
+            </div>
+            
+            <form id="recordForm">
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label for="patientName">Họ và tên bệnh nhân *</label>
+                        <input type="text" id="patientName" required>
+                    </div>
+                    <div class="form-group-full">
+                        <label for="patientId">Mã số bệnh nhân</label>
+                        <input type="text" id="patientId">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label for="patientAge">Tuổi</label>
+                        <input type="number" id="patientAge" min="0" max="150">
+                    </div>
+                    <div class="form-group-full">
+                        <label for="patientGender">Giới tính</label>
+                        <select id="patientGender">
+                            <option value="">Chọn giới tính</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label for="patientPhone">Số điện thoại</label>
+                        <input type="tel" id="patientPhone">
+                    </div>
+                    <div class="form-group-full">
+                        <label for="patientAddress">Địa chỉ</label>
+                        <input type="text" id="patientAddress">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label for="visitDate">Ngày khám *</label>
+                        <input type="datetime-local" id="visitDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="chiefComplaint">Lý do khám / Triệu chứng chính *</label>
+                    <textarea id="chiefComplaint" required placeholder="Mô tả lý do khám và các triệu chứng chính..."></textarea>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="diagnosis">Chẩn đoán</label>
+                    <textarea id="diagnosis" placeholder="Chẩn đoán bệnh..."></textarea>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="treatment">Điều trị / Đơn thuốc</label>
+                    <textarea id="treatment" placeholder="Phương pháp điều trị và đơn thuốc..."></textarea>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="notes">Ghi chú thêm</label>
+                    <textarea id="notes" placeholder="Các ghi chú bổ sung..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label for="bloodPressure">Huyết áp (mmHg)</label>
+                        <input type="text" id="bloodPressure" placeholder="VD: 120/80">
+                    </div>
+                    <div class="form-group-full">
+                        <label for="temperature">Nhiệt độ (°C)</label>
+                        <input type="number" id="temperature" step="0.1" placeholder="VD: 37.0">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label for="heartRate">Nhịp tim (bpm)</label>
+                        <input type="number" id="heartRate" placeholder="VD: 72">
+                    </div>
+                    <div class="form-group-full">
+                        <label for="weight">Cân nặng (kg)</label>
+                        <input type="number" id="weight" step="0.1" placeholder="VD: 65.5">
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="status">Tình trạng</label>
+                    <select id="status">
+                        <option value="Đang điều trị">Đang điều trị</option>
+                        <option value="Đã khỏi">Đã khỏi</option>
+                        <option value="Theo dõi">Theo dõi</option>
+                        <option value="Chuyển viện">Chuyển viện</option>
+                    </select>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="doctorName">Bác sĩ khám / Tên đăng nhập</label>
+                    <input type="text" id="doctorName" placeholder="Nhập tên bác sĩ hoặc tên người tạo hồ sơ">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeRecordModal()">Hủy</button>
+                    <button type="submit" class="btn-primary">Lưu hồ sơ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

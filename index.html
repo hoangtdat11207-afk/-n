@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập / Đăng ký - Trung tâm Y tế Khẩn cấp Hoà Lạc</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="logo">
+                    <h1>🏥</h1>
+                </div>
+                <h2>TRUNG TÂM Y TẾ KHẨN CẤP</h2>
+                <h3>HOÀ LẠC - ĐẠI HỌC QUỐC GIA HÀ NỘI</h3>
+            </div>
+            
+            <!-- Form đăng nhập -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginStudentId">Mã sinh viên</label>
+                    <input type="text" id="loginStudentId" name="loginStudentId" required placeholder="Nhập mã sinh viên">
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Mật khẩu</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required placeholder="Nhập mật khẩu">
+                </div>
+                
+                <button type="submit" class="btn-login">Đăng nhập</button>
+                
+                <div class="auth-switch">
+                    <span>Chưa có tài khoản? </span>
+                    <a href="#" onclick="switchToRegister(); return false;">Đăng ký ngay</a>
+                </div>
+                
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+            </form>
+            
+            <!-- Form đăng ký -->
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="registerFullName">Họ và tên *</label>
+                    <input type="text" id="registerFullName" name="registerFullName" required placeholder="Nhập họ và tên của bạn">
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerStudentId">Mã sinh viên *</label>
+                    <input type="text" id="registerStudentId" name="registerStudentId" required placeholder="Nhập mã sinh viên">
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPassword">Mật khẩu *</label>
+                    <input type="password" id="registerPassword" name="registerPassword" required placeholder="Tối thiểu 6 ký tự">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Nhập lại mật khẩu">
+                </div>
+                
+                <button type="submit" class="btn-login">Đăng ký</button>
+                
+                <div class="auth-switch">
+                    <span>Đã có tài khoản? </span>
+                    <a href="#" onclick="switchToLogin(); return false;">Đăng nhập</a>
+                </div>
+                
+                <div id="registerErrorMessage" class="error-message"></div>
+                <div id="registerSuccessMessage" class="success-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+</body>
+</html>
+
